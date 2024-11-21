@@ -1,0 +1,24 @@
+# node_modules를 무시 (필수)
+node_modules/
+
+# 빌드 출력 디렉토리 무시 (Vue CLI 기본값: dist/)
+dist/
+
+# 환경 파일 무시
+.env
+.env.* # .env.development, .env.production 등
+
+# 로컬 설정 파일 무시
+.vscode/
+
+# 잠재적인 IDE 설정 디렉토리
+.idea/
+
+# TypeScript 구성 파일 무시 (Vue 2에 TypeScript가 사용되지 않는 경우)
+tsconfig.json
+
+# ESLint 캐시 파일 무시
+eslintcache
+
+# Babel 설정 파일 무시
+babel.config.js

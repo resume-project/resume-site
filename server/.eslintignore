@@ -1,0 +1,31 @@
+# node_modules 무시 (필수)
+node_modules/
+
+# 빌드 결과물 (예: Babel 또는 TypeScript 빌드)
+build/
+dist/
+
+# 환경 설정 파일 무시
+.env
+.env.* # .env.development, .env.production 등
+
+# 로그 파일 무시
+logs/
+*.log
+
+# 임시 파일 및 디렉토리 무시
+temp/
+tmp/
+
+# IDE 설정 파일 무시
+.vscode/
+.idea/
+
+# ESLint 캐시 파일 무시
+eslintcache
+
+# Jest 테스트 결과 파일 무시
+coverage/
+
+# Docker 관련 파일 무시
+docker-compose.override.yml

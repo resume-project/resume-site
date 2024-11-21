@@ -1,0 +1,49 @@
+# 공통적으로 무시할 파일 및 디렉토리
+node_modules/
+dist/
+build/
+.env
+.env.*
+logs/
+*.log
+coverage/
+temp/
+tmp/
+
+# 운영체제 및 편집기 관련 파일
+.DS_Store
+Thumbs.db
+.idea/
+*.sublime-workspace
+
+# ESLint와 Prettier 관련 파일
+eslintcache
+.prettier-cache
+
+# Git 충돌 해결 시 생성되는 파일
+*.orig
+
+# 클라이언트 관련 무시할 항목
+client/node_modules/
+client/dist/
+client/.env
+client/.env.*
+client/coverage/
+client/temp/
+client/tmp/
+
+# 서버 관련 무시할 항목
+server/node_modules/
+server/build/
+server/.env
+server/.env.*
+server/logs/
+server/coverage/
+server/temp/
+server/tmp/
+
+# 기타 무시할 항목들
+*.bak
+*.swp
+*.iml
+*.tmp
