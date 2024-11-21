@@ -4,7 +4,8 @@
     <input
       :type="type"
       :id="id"
-      v-model="inputValue"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
       :placeholder="placeholder"
       :disabled="disabled"
     />
@@ -34,15 +35,14 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  data() {
-    return {
-      inputValue: '',
-    }
+    modelValue: {
+      // 부모로부터 받은 v-model 값
+      type: String,
+      default: '',
+    },
   },
 }
 </script>
-
 <style scoped>
 .input-group {
   margin-bottom: 20px;

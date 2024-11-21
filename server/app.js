@@ -19,8 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 // 라우터
-app.use('/', rootRouter);
-app.use('/tweets', tweetsRouter);
+app.use('/', rootRouter).use('/tweets', tweetsRouter);
 
 // 오류 처리
 app.use((req, res, next) => {

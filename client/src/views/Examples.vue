@@ -38,6 +38,24 @@
       v-model="password"
     />
 
+    <!-- Radio 컴포넌트 -->
+
+    <Radio
+      id="gender"
+      label="gender"
+      type="radio"
+      placeholder="choice your gender"
+      v-model="gender"
+    />
+
+    <Radio
+      id="gender"
+      label="gender"
+      type="radio"
+      placeholder="choice your gender"
+      v-model="gender"
+    />
+
     <!-- Alert 컴포넌트 -->
     <Alert
       v-if="alertVisible"
@@ -71,6 +89,7 @@ import Modal from '@/components/common/Modal.vue'
 import InputField from '@/components/common/InputField.vue'
 import Alert from '@/components/common/Alert.vue'
 import Card from '@/components/common/Card.vue'
+import Radio from '@/components/common/Radio.vue'
 
 export default {
   name: 'Examples',
@@ -79,6 +98,7 @@ export default {
     Modal,
     InputField,
     Alert,
+    Radio,
     Card,
   },
   data() {

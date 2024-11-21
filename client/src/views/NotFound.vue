@@ -6,7 +6,6 @@
 
 <script>
 import FullWidthLayout from '@/layouts/FullWidthLayout.vue'
-
 export default {
   name: 'NotFound',
   components: {

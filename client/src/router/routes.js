@@ -10,6 +10,11 @@ export default [
     component: () => import('@/views/Login.vue'),
   },
   {
+    path: '/Join',
+    name: 'Join',
+    component: () => import('@/views/Join.vue'),
+  },
+  {
     path: '/examples',
     name: 'Examples',
     component: () => import('@/views/Examples.vue'),

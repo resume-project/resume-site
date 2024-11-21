@@ -6,10 +6,12 @@
         <button class="close-btn" @click="close">×</button>
       </header>
       <div class="modal-body">
-        <slot></slot>
+        <slot>
+          <span v-html="{ content }"></span>
+        </slot>
       </div>
       <footer class="modal-footer">
-        <button class="btn btn-primary" @click="close">Close</button>
+        <button class="btn btn-primary" @click="close">닫기</button>
       </footer>
     </div>
   </div>
@@ -25,6 +27,10 @@ export default {
     title: {
       type: String,
       default: 'Modal Title',
+    },
+    content: {
+      type: String,
+      default: 'Modal Content',
     },
   },
   methods: {

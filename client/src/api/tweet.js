@@ -12,7 +12,6 @@ export const getTweets = async (username) => {
     )
   }
 }
-
 // 특정 트윗 조회
 export const getTweet = async (id) => {
   try {
@@ -24,7 +23,6 @@ export const getTweet = async (id) => {
     )
   }
 }
-
 // 트윗 작성
 export const createTweet = async (tweetData) => {
   try {
