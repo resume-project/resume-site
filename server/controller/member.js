@@ -15,26 +15,24 @@ export async function join(req, res, next) {
   }
 }
 
-export async function login(req, res) {
-  const { email, password } = req.body;
-  const member = await memberRepository.findByEmail(email);
-  if (!member) {
-    return res.status(401).json({ message: 'Invalid user or password' });
+export async function login(req, res, next) {
+  try {
+    const { email, password } = req.body;
+    const { accessToken, refreshToken } = await memberRepository.login(
+      email,
+      password
+    );
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'Strict',
+    });
+
+    res.status(200).json({ token: accessToken, email });
+  } catch (error) {
+    next(error);
   }
-  // const isValidPassword = await bcrypt.compare(password, member.MEMBER_PW);
-  // if (!isValidPassword) {
-  //   return res.status(401).json({ message: 'Invalid user or password' });
-  // }
-  const token = createJwtToken(member.MEMBER_CD);
-  const refreshToken = createRefreshToken(member.MEMBER_CD);
-
-  res.cookie('refreshToken', refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'Strict',
-  });
-
-  res.status(200).json({ token, email });
 }
 
 export async function logout(req, res) {
@@ -43,29 +41,20 @@ export async function logout(req, res) {
 }
 
 export async function refreshAccessToken(req, res) {
-  const { refreshToken } = req.cookies;
-  if (!refreshToken) {
-    return res.status(401).json({ message: 'Refresh Token not found' });
-  }
-
   try {
-    const decoded = jwt.verify(refreshToken, config.jwt.refreshSecretKey);
-    const newAccessToken = createJwtToken(decoded.id);
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'Refresh Token not found' });
+    }
+
+    const newAccessToken = await memberRepository.refreshAccessToken(
+      refreshToken
+    );
 
     res.status(200).json({ accessToken: newAccessToken });
   } catch (error) {
     res.status(403).json({ message: 'Invalid or expired Refresh Token' });
+    next(error);
   }
-}
-
-function createJwtToken(id) {
-  return jwt.sign({ id }, config.jwt.secretKey, {
-    expiresIn: config.jwt.expiresInSec,
-  });
-}
-
-function createRefreshToken(id) {
-  return jwt.sign({ id }, config.jwt.refreshSecretKey, {
-    expiresIn: config.jwt.refreshExpiresInSec,
-  });
 }

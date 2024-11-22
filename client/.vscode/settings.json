@@ -1,0 +1,30 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "vue"
+  ],
+  "eslint.workingDirectories": [
+    { "mode": "auto" },
+    { "directory": "./" }
+  ],
+  "prettier.requireConfig": true,
+  "files.associations": {
+    "*.vue": "vue"
+  },
+  "prettier.documentSelectors": ["**/*.js", "**/*.vue", "**/*.json"],
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#ff4d64",
+    "titleBar.inactiveBackground": "#ff4d64"
+  }
+}
