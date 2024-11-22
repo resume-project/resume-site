@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import rootRouter from './router/root.js';
 import tweetsRouter from './router/tweets.js';
+import memberRouter from './router/member.js';
 
 dotenv.config();
 const app = express();
@@ -19,7 +20,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 // 라우터
-app.use('/', rootRouter).use('/tweets', tweetsRouter);
+app
+  .use('/', rootRouter)
+  .use('/tweets', tweetsRouter)
+  .use('/member', memberRouter);
 
 // 오류 처리
 app.use((req, res, next) => {

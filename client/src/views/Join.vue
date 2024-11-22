@@ -7,6 +7,7 @@
       placeholder="Enter your email"
       v-model="email"
     />
+    <p>입력 값: {{ email }}</p>
     <InputField
       id="password"
       label="Password"
@@ -137,60 +138,53 @@ export default {
   },
   methods: {
     join() {
-      let email = document.getElementById('email').value
-      let password = document.getElementById('password').value
-      let name = document.getElementById('name').value
-      let age = document.getElementById('age').value
-      let gender = document.querySelector('input[name="gender"]:checked').value // 선택된 라디오 버튼 값 가져오기
-      let tel = document.getElementById('tel').value
-
       // 주소 로컬스토리지에 저장까지 했고 다음 항목부터 받으면 된다 현우야
-      let zonecode = localStorage.getItem('zonecode')
+      let zonecode = localStorage.getItem('postcode')
       let address = localStorage.getItem('address')
 
-      if (email.trim() === '') {
+      if (this.email.trim() === '') {
         this.failAlertVisible = true
         this.msg = '이메일을 입력해주세요.'
         setTimeout(() => {
           this.failAlertVisible = false
         }, 5000)
         return false
-      } else if (password.trim() === '') {
+      } else if (this.password.trim() === '') {
         this.failAlertVisible = true
         this.msg = '비밀번호를 입력해주세요.'
         setTimeout(() => {
           this.failAlertVisible = false
         }, 5000)
         return false
-      } else if (age.trim() === '') {
+      } else if (this.age === 0) {
         this.failAlertVisible = true
-        this.msg = '비밀번호를 입력해주세요.'
+        this.msg = '나이를 입력해주세요.'
         setTimeout(() => {
           this.failAlertVisible = false
         }, 5000)
         return false
-      } else if (name.trim() === '') {
+      } else if (this.name.trim() === '') {
         this.failAlertVisible = true
-        this.msg = '비밀번호를 입력해주세요.'
+        this.msg = '이름을 입력해주세요.'
         setTimeout(() => {
           this.failAlertVisible = false
         }, 5000)
         return false
-      } else if (gender.trim() === '') {
+      } else if (this.gender === '') {
         this.failAlertVisible = true
-        this.msg = '비밀번호를 입력해주세요.'
+        this.msg = '성별을 입력해주세요.'
         setTimeout(() => {
           this.failAlertVisible = false
         }, 5000)
         return false
-      } else if (!zonecode || !address) {
+      } else if (zonecode.trim() === '' || address.trim() === '') {
         this.failAlertVisible = true
         this.msg = '주소를 입력해주세요..'
         setTimeout(() => {
           this.failAlertVisible = false
         }, 5000)
         return false
-      } else if (tel.trim() === '') {
+      } else if (this.tel.trim() === '') {
         this.failAlertVisible = true
         this.msg = '전화번호를 입력해주세요.'
         setTimeout(() => {
@@ -200,16 +194,15 @@ export default {
       }
 
       let data = {
-        email: email,
-        password: password,
-        name: name,
-        age: age,
-        gender: gender,
-        tel: tel,
-        zonecode: zonecode,
-        address: address,
+        email: this.email,
+        password: this.password,
+        name: this.name,
+        age: this.age,
+        gender: this.gender,
+        tel: this.tel,
+        zonecode: this.zonecode,
+        address: this.address,
       }
-
       join(data)
     },
   },

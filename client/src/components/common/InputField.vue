@@ -5,7 +5,7 @@
       :type="type"
       :id="id"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('input', $event.target.value)"
       :placeholder="placeholder"
       :disabled="disabled"
     />

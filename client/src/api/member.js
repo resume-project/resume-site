@@ -4,10 +4,11 @@ import axios from './axios'
 export const join = async (data) => {
   try {
     console.log('들어옴')
-    const response = await axios.get('/join', { params: { data } })
+    const response = await axios.post('/join', data)
     console.log(response.data)
     return response.data
   } catch (error) {
+    console.log('error : ' + error)
     throw new Error(
       error.response?.data?.message || '회원가입에 실패하였습니다.',
     )

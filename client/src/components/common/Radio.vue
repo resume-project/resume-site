@@ -59,7 +59,7 @@ export default {
       }
     },
     updateValue() {
-      this.$emit('update:modelValue', this.optionName) // 선택된 값 업데이트
+      this.$emit('input', this.optionName) // 선택된 값 업데이트
     },
   },
 }
