@@ -1,17 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import rootRouter from './router/root.js';
 import tweetsRouter from './router/tweets.js';
+import memberRouter from './router/member.js';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import { config } from './config/env.js';
+import cookieParser from 'cookie-parser';
 
-dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 const corsOption = {
-  origin: [`${process.env.CLIENT_BASE_URL}`],
+  origin: [config.client.baseUrl],
   credentials: true,
 };
 
@@ -20,11 +20,15 @@ app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
+app.use(cookieParser());
 app.use(morgan('combined'));
 app.use(helmet());
 
 // 라우터
-app.use('/', rootRouter).use('/tweets', tweetsRouter);
+app
+  .use('/', rootRouter)
+  .use('/tweets', tweetsRouter)
+  .use('/member', memberRouter);
 
 // 오류 처리
 app.use((req, res, next) => {
@@ -37,4 +41,4 @@ app.use((error, req, res, next) => {
 });
 
 // 서버 실행
-app.listen(PORT);
+app.listen(config.host.port);
