@@ -7,6 +7,8 @@ router.post('/join', memberController.join);
 
 router.post('/login', memberController.login);
 
-router.get('/refreshAccessToken', memberController.refreshAccessToken);
+router.get('/logout', memberController.logout);
+
+router.get('/token/refresh', memberController.refreshAccessToken);
 
 export default router;
