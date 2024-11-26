@@ -45,3 +45,40 @@ export async function refreshAccessToken(refreshToken) {
   const decoded = verifyToken(refreshToken, config.jwt.refreshSecretKey);
   return createJwtToken(decoded.id);
 }
+
+export async function join(
+  email,
+  password,
+  age,
+  name,
+  gender,
+  tel,
+  address,
+  postCode
+) {
+  console.log(
+    memberMapper.joinQuery(
+      email,
+      password,
+      age,
+      name,
+      gender,
+      tel,
+      address,
+      postCode
+    )
+  );
+
+  await executeQuery(
+    memberMapper.joinQuery(
+      email,
+      password,
+      age,
+      name,
+      gender,
+      tel,
+      address,
+      postCode
+    )
+  );
+}
