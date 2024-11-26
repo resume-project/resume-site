@@ -21,7 +21,9 @@ export async function join(req, res, next) {
       address,
       postCode
     );
-    res.status(200).json(data);
+    console.log(data);
+    if (data) res.status(200).json({ code: 1 });
+    else res.status(200).json({ code: 0 });
   } catch (error) {
     next(error);
   }

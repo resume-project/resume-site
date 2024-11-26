@@ -69,7 +69,7 @@ export async function join(
     )
   );
 
-  await executeQuery(
+  return await executeQuery(
     memberMapper.joinQuery(
       email,
       password,

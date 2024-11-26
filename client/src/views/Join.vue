@@ -199,7 +199,15 @@ export default {
         }
       }
 
-      await join(data)
+      let res = await join(data)
+      console.log(res.code)
+      if (res.code === 1) {
+        alert('회원가입에 성공하였습니다.')
+        location.href = '/'
+      } else {
+        alert('회원가입에 실패하였습니다.\n다시 시도해주세요.')
+        location.reload
+      }
     },
   },
 }

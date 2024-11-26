@@ -10,6 +10,7 @@ export const join = async (data) => {
     console.log('error : ' + error)
     throw new Error(
       error.response?.data?.message || '회원가입에 실패하였습니다.',
+      location.reload,
     )
   }
 }
