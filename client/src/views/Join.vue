@@ -7,7 +7,6 @@
       placeholder="Enter your email"
       v-model="email"
     />
-    <p>입력 값: {{ email }}</p>
     <InputField
       id="password"
       label="Password"
@@ -34,10 +33,13 @@
     <Modal
       :visible="showModal"
       @update:visible="showModal = $event"
-      title="Example Modal"
+      title="주소 검색"
     >
       <p>주소를 검색해주세요.</p>
-      <KaKaoAddressAPI />
+      <KaKaoAddressAPI
+        :visible="showModal"
+        @update:visible="showModal = $event"
+      />
     </Modal>
     <InputField
       id="tel"
@@ -137,9 +139,47 @@ export default {
     }
   },
   methods: {
-    join() {
+    async join() {
+      const patterns = {
+        email: /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/,
+        password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
+        age: /^\d{1,3}$/,
+        name: /^[가-힣a-zA-Z\s]{2,30}$/,
+        gender: /^(male|female)$/,
+        tel: /^010-\d{4}-\d{4}$/,
+        address: /^.{5,100}$/,
+        postCode: /^\d{5}$/,
+      }
+
+      let data = {
+        email: this.email,
+        password: this.password,
+        name: this.name,
+        age: this.age,
+        gender: this.gender,
+        tel: this.tel,
+        postcode: postCode,
+        address: address,
+      }
+
+      // 유효성 검사 실행
+      this.errors = [] // 매번 초기화
+      for (const [field, pattern] of Object.entries(patterns)) {
+        console.log(data[field])
+        // postCode와 address는 로컬스토리지에서 가져오기
+        const value =
+          field === 'postCode' || field === 'address'
+            ? localStorage.getItem(field)
+            : data[field]
+
+        // null 체크 및 정규식 검증
+        if (!value || !pattern.test(value)) {
+          this.errors.push(`${field} is invalid.`)
+        }
+      }
+
       // 주소 로컬스토리지에 저장까지 했고 다음 항목부터 받으면 된다 현우야
-      let zonecode = localStorage.getItem('postcode')
+      let postCode = localStorage.getItem('postcode')
       let address = localStorage.getItem('address')
 
       if (this.email.trim() === '') {
@@ -177,7 +217,7 @@ export default {
           this.failAlertVisible = false
         }, 5000)
         return false
-      } else if (zonecode.trim() === '' || address.trim() === '') {
+      } else if (postCode.trim() === '' || address.trim() === '') {
         this.failAlertVisible = true
         this.msg = '주소를 입력해주세요..'
         setTimeout(() => {
@@ -192,18 +232,8 @@ export default {
         }, 5000)
         return false
       }
-
-      let data = {
-        email: this.email,
-        password: this.password,
-        name: this.name,
-        age: this.age,
-        gender: this.gender,
-        tel: this.tel,
-        zonecode: this.zonecode,
-        address: this.address,
-      }
-      join(data)
+      let res = await join(data)
+      console.log('res : ' + res)
     },
   },
 }

@@ -21,6 +21,12 @@
 
 <script>
 export default {
+  props: {
+    visible: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       zonecode: '',
@@ -30,6 +36,8 @@ export default {
   },
   methods: {
     openPostcode() {
+      localStorage.setItem('postcode', '')
+      localStorage.setItem('address', '')
       new window.daum.Postcode({
         oncomplete: (data) => {
           // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분
@@ -41,6 +49,7 @@ export default {
     addressSave() {
       localStorage.setItem('postcode', this.zonecode) // zonecode는 v-model에 바인딩된 변수
       localStorage.setItem('address', this.roadAddress + this.detailAddress)
+      this.$emit('update:visible', false)
     },
   },
 }
