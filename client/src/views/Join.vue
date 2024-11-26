@@ -136,6 +136,7 @@ export default {
       msg: '',
       optionName: '',
       showModal: false,
+      errors: [],
     }
   },
   methods: {
@@ -148,7 +149,7 @@ export default {
         gender: /^(male|female)$/,
         tel: /^010-\d{4}-\d{4}$/,
         address: /^.{5,100}$/,
-        postCode: /^\d{5}$/,
+        postcode: /^\d{5}$/,
       }
 
       let data = {
@@ -158,82 +159,37 @@ export default {
         age: this.age,
         gender: this.gender,
         tel: this.tel,
-        postcode: postCode,
-        address: address,
+        postcode:
+          localStorage.getItem('postcode') === undefined
+            ? ''
+            : localStorage.getItem('postcode'),
+        address:
+          localStorage.getItem('address') === undefined
+            ? ''
+            : localStorage.getItem('address'),
       }
 
       // 유효성 검사 실행
       this.errors = [] // 매번 초기화
       for (const [field, pattern] of Object.entries(patterns)) {
-        console.log(data[field])
         // postCode와 address는 로컬스토리지에서 가져오기
         const value =
-          field === 'postCode' || field === 'address'
+          field === 'postcode' || field === 'address'
             ? localStorage.getItem(field)
             : data[field]
 
         // null 체크 및 정규식 검증
         if (!value || !pattern.test(value)) {
-          this.errors.push(`${field} is invalid.`)
+          this.failAlertVisible = true
+          this.msg = `${field}가 공백이거나 형식이 올바르지 않습니다.`
+          setTimeout(() => {
+            this.failAlertVisible = false
+          }, 5000)
+          return false
         }
       }
 
-      // 주소 로컬스토리지에 저장까지 했고 다음 항목부터 받으면 된다 현우야
-      let postCode = localStorage.getItem('postcode')
-      let address = localStorage.getItem('address')
-
-      if (this.email.trim() === '') {
-        this.failAlertVisible = true
-        this.msg = '이메일을 입력해주세요.'
-        setTimeout(() => {
-          this.failAlertVisible = false
-        }, 5000)
-        return false
-      } else if (this.password.trim() === '') {
-        this.failAlertVisible = true
-        this.msg = '비밀번호를 입력해주세요.'
-        setTimeout(() => {
-          this.failAlertVisible = false
-        }, 5000)
-        return false
-      } else if (this.age === 0) {
-        this.failAlertVisible = true
-        this.msg = '나이를 입력해주세요.'
-        setTimeout(() => {
-          this.failAlertVisible = false
-        }, 5000)
-        return false
-      } else if (this.name.trim() === '') {
-        this.failAlertVisible = true
-        this.msg = '이름을 입력해주세요.'
-        setTimeout(() => {
-          this.failAlertVisible = false
-        }, 5000)
-        return false
-      } else if (this.gender === '') {
-        this.failAlertVisible = true
-        this.msg = '성별을 입력해주세요.'
-        setTimeout(() => {
-          this.failAlertVisible = false
-        }, 5000)
-        return false
-      } else if (postCode.trim() === '' || address.trim() === '') {
-        this.failAlertVisible = true
-        this.msg = '주소를 입력해주세요..'
-        setTimeout(() => {
-          this.failAlertVisible = false
-        }, 5000)
-        return false
-      } else if (this.tel.trim() === '') {
-        this.failAlertVisible = true
-        this.msg = '전화번호를 입력해주세요.'
-        setTimeout(() => {
-          this.failAlertVisible = false
-        }, 5000)
-        return false
-      }
-      let res = await join(data)
-      console.log('res : ' + res)
+      await join(data)
     },
   },
 }
