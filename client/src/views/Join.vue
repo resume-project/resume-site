@@ -26,8 +26,18 @@
       placeholder="Enter your age"
       v-model="age"
     />
-    <Radio id="gender" label="Gender" option-name="Male" v-model="gender" />
-    <Radio id="gender" label="Gender" option-name="Female" v-model="gender" />
+    <Radio
+      group-name="gender"
+      label="Gender"
+      option-name="Male"
+      v-model="gender"
+    />
+    <Radio
+      group-name="gender"
+      label="Gender"
+      option-name="Female"
+      v-model="gender"
+    />
     <br />
     <Button type="primary" @click="showModal = true">주소 입력</Button>
     <Modal
@@ -146,7 +156,7 @@ export default {
         password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
         age: /^\d{1,3}$/,
         name: /^[가-힣a-zA-Z\s]{2,30}$/,
-        gender: /^(male|female)$/,
+        gender: /^(Male|Female)$/,
         tel: /^010-\d{4}-\d{4}$/,
         address: /^.{5,100}$/,
         postcode: /^\d{5}$/,

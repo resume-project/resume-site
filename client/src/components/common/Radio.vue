@@ -10,6 +10,7 @@
   >
     <input
       type="radio"
+      :name="groupName"
       class="radio-input"
       :disabled="disabled"
       :checked="isChecked"
@@ -38,6 +39,10 @@ export default {
       default: false,
     },
     optionName: {
+      type: String,
+      default: '',
+    },
+    groupName: {
       type: String,
       default: '',
     },
