@@ -1,7 +1,7 @@
 import e from 'express';
 import * as tweetRepository from '../service/tweet.js';
 
-export async function getTweets(req, res) {
+export async function getTweets(req, res, next) {
   try {
     const username = req.query.username;
     const data = await (username

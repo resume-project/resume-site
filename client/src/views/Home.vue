@@ -39,7 +39,7 @@ export default {
   methods: {
     async fetchTweets() {
       this.$emit('setLoading', true)
-      this.$emit('setError', null)
+      this.$emit('setError', '')
       try {
         const data = await tweetApi.getTweets()
         this.tweets = data
