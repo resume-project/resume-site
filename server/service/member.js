@@ -88,3 +88,14 @@ export async function join(
     )
   );
 }
+
+export const me = async (id) => {
+  const members = await executeQuery(memberMapper.getMemberById(id));
+  const member =
+    Array.isArray(members) && members.length > 0 ? members[0] : null;
+  if (!member) {
+    throw new Error('Invalid member or password');
+  }
+  console.log(member);
+  return member;
+};

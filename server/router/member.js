@@ -10,6 +10,8 @@ router.post('/login', memberController.login);
 
 router.get('/logout', isAuth, memberController.logout);
 
+router.get('/me', isAuth, memberController.me);
+
 router.get('/token/refresh', memberController.refreshAccessToken);
 
 export default router;

@@ -23,7 +23,10 @@ export const isAuth = async (req, res, next) => {
   if (!member) {
     return res.status(401).json(AUTH_ERROR);
   }
-  req.userId = member.MEMBER_CD;
+
+  // req 객체에 추가
   req.accessToken = accessToken;
+  req.memberId = member.MEMBER_CD;
+  req.email = member.MEMBER_EMAIL;
   next();
 };
