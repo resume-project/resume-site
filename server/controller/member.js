@@ -55,6 +55,22 @@ export async function logout(req, res) {
   }
 }
 
+export async function me(req, res, next) {
+  try {
+    const member = await memberRepository.me(req.memberId);
+    if (!member) {
+      sendResponse(res, 404, 'User not found');
+    }
+    sendResponse(res, 200, 'Auth successfully', {
+      accessToken: req.accessToken,
+      memberId: req.memberId,
+      email: member.MEMBER_EMAIL,
+    });
+  } catch (error) {
+    sendResponse(res, 500, 'Auth failed');
+  }
+}
+
 export async function refreshAccessToken(req, res) {
   try {
     const { refreshToken } = req.cookies;
