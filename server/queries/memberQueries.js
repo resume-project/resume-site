@@ -29,3 +29,7 @@ export const joinQuery = (
 export const getMemberByEmail = (email) => `
   SELECT * FROM member WHERE MEMBER_EMAIL = '${email}'
 `;
+
+export const getMemberById = (id) => `
+  SELECT * FROM member WHERE MEMBER_CD = '${id}'
+`;
