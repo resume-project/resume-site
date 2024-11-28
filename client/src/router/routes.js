@@ -15,6 +15,16 @@ export default [
     component: () => import('@/views/Join.vue'),
   },
   {
+    path: '/findId',
+    name: 'findId',
+    component: () => import('@/views/findId.vue'),
+  },
+  {
+    path: '/findPw',
+    name: 'findPw',
+    component: () => import('@/views/findPasswod.vue'),
+  },
+  {
     path: '/examples',
     name: 'Examples',
     component: () => import('@/views/Examples.vue'),
