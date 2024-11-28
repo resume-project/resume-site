@@ -11,8 +11,14 @@ export async function findByEmail(email) {
   return executeQuery(memberMapper.getMemberByEmail(email));
 }
 
+export async function findById(id) {
+  return executeQuery(memberMapper.getMemberById(id));
+}
+
 export async function login(email, password) {
-  const member = await findByEmail(email);
+  const members = await findByEmail(email);
+  const member =
+    Array.isArray(members) && members.length > 0 ? members[0] : null;
   if (!member) {
     throw new Error('Invalid member or password');
   }

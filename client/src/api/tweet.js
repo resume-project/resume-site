@@ -1,4 +1,4 @@
-import axios from './axios'
+import axios from '../utils/axios/interceptors.js'
 
 // 모든 트윗 또는 특정 사용자 트윗 조회
 export const getTweets = async (username) => {

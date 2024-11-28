@@ -1,8 +1,7 @@
 import * as memberRepository from '../service/member.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { config } from '../config/env.js';
 import { strEncoding } from '../utils/bcryptUtil.js';
+import { sendResponse } from '../utils/response.js';
 
 export async function join(req, res, next) {
   try {
@@ -22,8 +21,8 @@ export async function join(req, res, next) {
       postCode
     );
     console.log(data);
-    if (data) res.status(200).json({ code: 1 });
-    else res.status(200).json({ code: 0 });
+    if (data) sendResponse(res, 201, null, { code: 1 });
+    else sendResponse(res, 400, null, { code: 0 });
   } catch (error) {
     next(error);
   }
@@ -36,39 +35,40 @@ export async function login(req, res, next) {
       email,
       password
     );
-
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'Strict',
     });
-
-    res.status(200).json({ token: accessToken, email });
+    sendResponse(res, 200, 'Login successful', { accessToken, email });
   } catch (error) {
     next(error);
   }
 }
 
 export async function logout(req, res) {
-  res.clearCookie('refreshToken');
-  res.status(200).json({ message: 'Logged out successfully' });
+  try {
+    res.clearCookie('refreshToken');
+    sendResponse(res, 200, 'Logged out successfully');
+  } catch (error) {
+    sendResponse(res, 500, 'Logout failed');
+  }
 }
 
 export async function refreshAccessToken(req, res) {
   try {
     const { refreshToken } = req.cookies;
-
     if (!refreshToken) {
-      return res.status(401).json({ message: 'Refresh Token not found' });
+      return sendResponse(res, 401, 'Refresh Token not found');
     }
-
     const newAccessToken = await memberRepository.refreshAccessToken(
       refreshToken
     );
-
-    res.status(200).json({ accessToken: newAccessToken });
+    sendResponse(res, 200, 'Access Token refreshed', {
+      accessToken: newAccessToken,
+    });
   } catch (error) {
-    res.status(403).json({ message: 'Invalid or expired Refresh Token' });
+    sendResponse(res, 403, 'Invalid or expired Refresh Token');
     next(error);
   }
 }

@@ -6,7 +6,7 @@ export async function executeQuery(sql, params = []) {
   try {
     connection = await pool.getConnection();
     const [results] = await connection.execute(sql, params);
-    return results;
+    return results.length > 0 ? results : null;
   } catch (error) {
     console.error('Database query failed:', error.message);
     throw new Error('Database query failed');
