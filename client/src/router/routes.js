@@ -24,6 +24,7 @@ export default [
     name: 'findPw',
     component: () => import('@/views/findPasswod.vue'),
   },
+
   {
     path: '/examples',
     name: 'Examples',

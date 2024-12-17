@@ -21,11 +21,24 @@ export const joinQuery = (
       '${tel}',      -- 문자열: 전화번호
       '',            -- bio: 빈 문자열
       DEFAULT,       -- 생성일 (자동 생성)
-      DEFAULT        -- 수정일 (자동 업데이트)
+      DEFAULT,       -- 수정일 (자동 업데이트)
+      DEFAULT        -- 회원 상태 
     )
   `;
 };
 
 export const getMemberByEmail = (email) => `
   SELECT * FROM member WHERE MEMBER_EMAIL = '${email}'
+`;
+
+export const findByCd = (cd) => `
+  SELECT * FROM MEMBER WHERE MEMBER_CD = '${cd}'
+`;
+
+export const createMailAuthInfo = (authCd, memberCd) => `
+  INSERT INTO MEMBER_MAIL_AUTH VALUES(DEFAULT,'${memberCd}', '${authCd}')
+`;
+
+export const updateMemberStatus = (status, memberCd) => `
+  UPDATE MEMBER SET MEMBER_STATUS = '${status}' WHERE MEMBER_CD = ${memberCd}
 `;

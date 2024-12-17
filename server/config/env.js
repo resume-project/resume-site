@@ -36,4 +36,8 @@ export const config = {
   client: {
     baseUrl: required('CLIENT_BASE_URL'),
   },
+  email: {
+    email: required('EMAIL'),
+    password: required('PASSWORD'),
+  },
 };

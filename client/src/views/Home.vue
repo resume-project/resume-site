@@ -51,6 +51,9 @@ export default {
     },
   },
   mounted() {
+    if (this.$route.query.join) {
+      alert('회원가입하신걸 환영합니다.')
+    }
     this.fetchTweets()
   },
 }

@@ -4,11 +4,13 @@ import pool from '../config/db.js';
 export async function executeQuery(sql, params = []) {
   let connection;
   try {
+    console.log('ExecuteQuery : ' + sql);
     connection = await pool.getConnection();
     const [results] = await connection.execute(sql, params);
     return results;
   } catch (error) {
     console.error('Database query failed:', error.message);
+    await connection.rollback();
     throw new Error('Database query failed');
   } finally {
     if (connection) connection.release();

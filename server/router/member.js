@@ -11,4 +11,9 @@ router.get('/logout', memberController.logout);
 
 router.get('/token/refresh', memberController.refreshAccessToken);
 
+router.get(
+  '/joinEmailAuthentication',
+  memberController.joinEmailAuthentication
+);
+
 export default router;
