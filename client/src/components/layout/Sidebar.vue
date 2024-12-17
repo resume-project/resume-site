@@ -4,18 +4,21 @@
     <div>
       <ul v-if="isLoginBoxView">
         <li>
-          <div style="width: 100%; height: 200px">
+          <div style="width: 100%; height: 200px" id="loginBox" v-if="!isLogin">
             <InputField
               id="id"
               style="width: 180px"
               label="아이디"
               placeholder="아이디를 입력해주세요."
+              v-model="email"
             ></InputField>
             <InputField
               id="pw"
+              type="password"
               style="width: 180px; margin-bottom: 0px"
               label="비밀번호"
               placeholder="비밀번호를 입력해주세요."
+              v-model="password"
             ></InputField>
             <ul>
               <li style="text-align: center">
@@ -24,6 +27,7 @@
               </li>
             </ul>
           </div>
+          <div id="memberInfoBox" v-if="isLogin">로그인 성공</div>
         </li>
         <li>
           마이페이지
@@ -54,14 +58,16 @@ ul > li {
 }
 </style>
 <script>
+import { login } from '@/api/member'
 import InputField from '../common/InputField.vue'
 
 export default {
   name: 'Sidebar',
   data() {
     return {
-      id: '',
-      pw: '',
+      email: '',
+      password: '',
+      isLogin: false,
       isLoginBoxView:
         location.href
           .substring(location.href.lastIndexOf('/') + 1)
@@ -77,13 +83,18 @@ export default {
     InputField,
   },
   methods: {
-    login() {
-      alert(
-        '로그인 버튼 클릭 !!' +
-          location.href
-            .substring(location.href.lastIndexOf('/') + 1)
-            .replace('#', ''),
-      )
+    async login() {
+      const response = await login({
+        email: this.email,
+        password: this.password,
+      })
+
+      if (response.token) {
+        alert('로그인에 성공하셨습니다.')
+        this.isLogin = !this.isLogin
+      } else {
+        alert('로그인에 실패하셨습니다.')
+      }
     },
   },
 }

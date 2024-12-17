@@ -24,7 +24,7 @@ export default {
   name: 'Header',
   data() {
     return {
-      jwt: localStorage.getItem('jwt'), // 나중에 소희누나랑 이야기해서 수정
+      jwt: localStorage.getItem('refreshToken'), // 나중에 소희누나랑 이야기해서 수정
       name: '',
     }
   },
